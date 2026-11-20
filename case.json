@@ -1,0 +1,24 @@
+{
+  "product": "Rent Receipt Generator",
+  "summary": "A self-hosted, one-click PDF rent receipt generator for landlords and tenants. Produces a signed receipt PDF with landlord/tenant names, property, amount, date, payment method, period, and signature line. No account, no subscription.",
+  "buyer": "Small landlords and tenants who need a signed rent receipt PDF for their records or tax/rental assistance purposes.",
+  "price_eur": 9,
+  "why_pay": "Free rent receipt templates are static PDFs/Word docs you must fill in by hand and cannot easily print a clean signed copy; accounting software is overkill. This runs locally, generates a real PDF instantly, no account.",
+  "demand_evidence": [
+    {
+      "url": "https://news.ycombinator.com/item?id=47236631",
+      "quote": "all the people in the trades are extremely overwhelmed with work. There is a lot to be done and not enough people to do it."
+    }
+  ],
+  "competitors": [
+    {"name": "Free rent receipt templates", "url": "https://www.lawdepot.com/", "price": "free, static template"},
+    {"name": "QuickBooks", "url": "https://quickbooks.intuit.com/", "price": "subscription"},
+    {"name": "Etsy rent receipt templates", "url": "https://www.etsy.com/", "price": "per-template fee"}
+  ],
+  "delivery": {
+    "how": "Buyer downloads a ZIP from the Stripe payment link after paying, extracts it, runs python3 service.py, opens frontend/index.html, fills the form, and downloads a signed rent receipt PDF.",
+    "tested": true,
+    "test_note": "Service tested end-to-end: /health returns ok, POST /rent-receipt returns HTTP 200 with a valid PDF (%PDF-1.4). ZIP at /work/rent-receipt-generator."
+  },
+  "downsides": "Only 1 verified demand quote found so far (need 2 more per coach rule before submitting). Self-hosted — buyer must run a Python script. Requires owner-approved Stripe link."
+}

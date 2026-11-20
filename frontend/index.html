@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rent Receipt Generator</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; color: #1f2937; }
+h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+p.sub { color: #6b7280; font-size: 0.95rem; margin-bottom: 1.5rem; }
+form { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; background: #f9fafb; padding: 1.25rem; border-radius: 8px; border: 1px solid #e5e7eb; }
+label { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem; display: block; color: #374151; }
+input, select { width: 100%; padding: 0.55rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.95rem; color: #111827; }
+input:focus, select:focus { outline: none; border-color: #1a73e8; }
+.full { grid-column: 1 / -1; }
+button { grid-column: 1 / -1; padding: 0.8rem; background: #1a73e8; color: white; border: none; border-radius: 6px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 0.5rem; }
+button:hover { background: #1557b0; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+#msg { margin-top: 1rem; font-size: 0.9rem; min-height: 1.3em; }
+.preview { margin-top: 1.5rem; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem; display: none; background: #fff; }
+.preview h2 { font-size: 1rem; margin-top: 0; }
+.ai-notice { font-size: 0.75rem; color: #6b7280; margin-top: 1.5rem; border-top: 1px solid #e5e7eb; padding-top: 0.75rem; }
+</style>
+</head>
+<body>
+<h1>Rent Receipt Generator</h1>
+<p class="sub">Create a signed rent receipt PDF for your tenant in seconds. No account, no subscription — runs on your own machine.</p>
+<form id="form">
+<label>Landlord name</label>
+<input name="landlord_name" required>
+
+<label>Tenant name</label>
+<input name="tenant_name" required>
+
+<label>Landlord address</label>
+<input name="landlord_address" class="full">
+
+<label>Tenant address</label>
+<input name="tenant_address" class="full">
+
+<label>Property (address / unit)</label>
+<input name="property" class="full" required>
+
+<label>Amount paid</label>
+<input name="amount" placeholder="$0.00" required>
+
+<label>Date of payment</label>
+<input name="date" type="date" required>
+
+<label>Payment method</label>
+<select name="method">
+<option value="Cash">Cash</option>
+<option value="Check">Check</option>
+<option value="Bank transfer">Bank transfer</option>
+<option value="Other">Other</option>
+</select>
+
+<label>Rental period</label>
+<input name="period" placeholder="e.g. January 2024" required>
+
+<label>Note (optional)</label>
+<input name="note">
+
+<label>Received by (defaults to landlord)</label>
+<input name="received_by">
+
+<button type="submit" id="btn">Generate PDF Receipt</button>
+</form>
+<div id="msg"></div>
+<div class="preview" id="preview"><h2>Receipt preview</h2><iframe id="pdf-frame" style="width:100%;height:640px;border:none;"></iframe></div>
+
+<div class="ai-notice">Self-hosted: run <code>python3 service.py</code>. Produces a real PDF. Paid ready-to-run version: utilwright.com/rent-receipt-generator</div>
+
+<script>
+document.getElementById('form').onsubmit = async function(e){
+  e.preventDefault();
+  const btn = document.getElementById('btn');
+  const msg = document.getElementById('msg');
+  const preview = document.getElementById('preview');
+  const frame = document.getElementById('pdf-frame');
+  btn.disabled = true; btn.textContent = "Generating...";
+  msg.textContent = ""; preview.style.display = "none";
+  const fd = new FormData(this);
+  const data = Object.fromEntries(fd);
+  try {
+    const res = await fetch("/rent-receipt", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(data) });
+    if (!res.ok) throw new Error("Server error " + res.status);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    frame.src = url;
+    preview.style.display = "block";
+    msg.textContent = "PDF receipt generated. Print or save it.";
+    msg.style.color = "#0f766e";
+  } catch (err) {
+    msg.textContent = "Failed: " + err.message;
+    msg.style.color = "#dc2626";
+  } finally {
+    btn.disabled = false; btn.textContent = "Generate PDF Receipt";
+  }
+};
+</script>
+</body>
+</html>
