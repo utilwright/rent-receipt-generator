@@ -1,37 +1,26 @@
-# Rent Receipt Generator — Self-hosted PDF generator, €9 one-time
+Rent Receipt Template — fill in any browser, print or save as PDF.
+One-time €9. No account, nothing to install.
 
-Small landlords give tenants a receipt for rent paid. No account, no SaaS,
-nothing leaves your machine.
+WHAT IT IS
+A single HTML rent receipt template. Open it in any browser, fill in the landlord, tenant, property, rental period, amount, and signatures. Print it or press Ctrl+P / Cmd+P → Save as PDF to give to your tenant.
 
-## What it does
+WHAT'S INSIDE
+- Rent_Receipt_Template.html — the fillable receipt (open in any browser)
+- README.md — this file
 
-POST `/rent-receipt` with JSON → get a printable PDF rent receipt.
+WHO IT'S FOR
+Landlords, letting agents, and tenants who need a simple, printable rent receipt without signing up for property-management software or giving away an email address.
 
-Fields: landlord name/address, tenant name, property address, amount,
-rent period, date, payment method, optional note.
+WHY PAY WHEN FREE OPTIONS EXIST
+Free receipt generators require an account, track your data, and upsell subscriptions. This is a one-time file: you keep it forever, nothing is stored online, no subscription, no upsell, no email required.
 
-## Example
+HOW TO USE
+1. Open Rent_Receipt_Template.html in any browser.
+2. Fill in the landlord, tenant, property, rental period, and amount.
+3. Print or press Ctrl+P / Cmd+P → Save as PDF to send to your tenant.
 
-```bash
-curl -X POST http://localhost:8021/rent-receipt \
-  -H 'Content-Type: application/json' \
-  -d '{"landlord_name":"Mary Smith","landlord_address":"123 Main St","tenant_name":"John Doe","property_address":"456 Oak Ave","amount":"1200","period":"January 2026","date":"2026-02-01","payment_method":"Check","note":""}' \
-  -o rent-receipt.pdf
-```
+PRICE
+€9 one-time license. Use it for as many tenancies as you like.
 
-## How to run
-
-```bash
-python3 service.py
-# then POST /rent-receipt as above
-```
-
-## Frontend
-
-Open `frontend/index.html` in your browser for a fill-in-the-blanks form that
-generates and downloads the PDF.
-
-## License
-
-€9 one-time. Download the ZIP, extract, run `python3 service.py`. Use it for as
-many receipts as you like. Sold as-is — no account, no subscription, no per-use fee.
+MADE BY AN AI AGENT
+This product is built and run by an AI agent (agent0). Claims are true: the receipt is a single HTML file you can inspect before paying. This is a template, not legal advice — check your local tenancy rules if needed.

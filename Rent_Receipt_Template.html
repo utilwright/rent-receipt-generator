@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rent Receipt Template — fillable</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#111;max-width:720px;margin:40px auto;padding:20px;line-height:1.6}
+.page{background:#fff;border:1px solid #cbd5e1;border-radius:8px;padding:34px 38px}
+h1{font-size:18px;color:#0b3d91;margin:0 0 4px 0}
+.sub{color:#475569;font-size:0.95rem;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;margin:12px 0}
+td,th{border:1px solid #94a3b8;padding:8px 10px;font-size:0.95rem;vertical-align:top}
+th{background:#eef2f7;color:#0b3d91;font-weight:600}
+input{width:100%;border:1px solid #b0b7c3;border-radius:4px;padding:5px 8px;box-sizing:border-box;font:inherit}
+input:focus{border-color:#0b3d91;outline:none;background:#fbfdff}
+.blank{height:24px;border-bottom:1.6px solid #333;display:block;margin:2px 0}
+.total{font-weight:bold;font-size:1.05rem}
+.notice{background:#fffbeb;border:1px solid #d9a400;border-radius:6px;padding:10px 12px;margin:14px 0;font-size:0.9rem;color:#7a5c00}
+.muted{color:#64748b;font-size:0.85rem}
+@media print{body{background:#fff;padding:0}.page{border:none;box-shadow:none;padding:20px}}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>Rent Receipt</h1>
+<p class="sub">A written receipt for rent paid. Fill in the details, print or save as PDF, and give a copy to your tenant.</p>
+
+<div class="notice"><b>How to use:</b> Fill every blank below. Give one signed copy to the tenant and keep one for your records. This is a template, not legal advice — check your local tenancy rules if needed.</div>
+
+<table>
+<tr>
+<th style="width:34%">Landlord / Agent</th>
+<th style="width:33%">Tenant</th>
+<th style="width:33%">Date</th>
+</tr>
+<tr>
+<td><input type="text" placeholder="Landlord or agent name"></td>
+<td><input type="text" placeholder="Tenant name(s)"></td>
+<td><input type="text" placeholder="Date rent received"></td>
+</tr>
+</table>
+
+<table>
+<tr>
+<th style="width:34%">Property address</th>
+<th style="width:33%">Rental period</th>
+<th style="width:33%">Payment method</th>
+</tr>
+<tr>
+<td><input type="text" placeholder="Address of the rented property"></td>
+<td><input type="text" placeholder="e.g. 1 June – 30 June 2026"></td>
+<td><input type="text" placeholder="e.g. bank transfer, cash, standing order"></td>
+</tr>
+</table>
+
+<table>
+<tr><th style="width:56%">Description</th><th style="width:22%">Amount</th><th style="width:22%">Paid</th></tr>
+<tr><td>Rent — <input type="text" placeholder="period"></td><td><input type="text" placeholder="0.00"></td><td><input type="text" placeholder="0.00"></td></tr>
+<tr><td><input type="text" placeholder="additional charge (e.g. deposit, late fee)"></td><td><input type="text" placeholder="0.00"></td><td><input type="text" placeholder="0.00"></td></tr>
+<tr><td><input type="text" placeholder="additional charge"></td><td><input type="text" placeholder="0.00"></td><td><input type="text" placeholder="0.00"></td></tr>
+</table>
+
+<p class="total" style="text-align:right">Total received: <input type="text" placeholder="0.00"></p>
+
+<div class="sig" style="display:flex;gap:30px;margin-top:22px">
+<div style="flex:1"><div class="blank"></div><div class="muted">Landlord / agent signature</div></div>
+<div style="flex:1"><div class="blank"></div><div class="muted">Tenant signature</div></div>
+</div>
+</div>
+</body>
+</html>

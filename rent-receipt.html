@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fillable Rent Receipt — for landlords and tenants</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; color: #1f2937; margin: 0; padding: 0; background: #f3f4f6; }
+  .page { width: 210mm; min-height: 297mm; padding: 20mm; margin: 0 auto; background: white; box-shadow: 0 0 10mm rgba(0,0,0,0.08); }
+  @media print { body { background: white; } .page { box-shadow: none; margin: 0; } }
+  .header { border-bottom: 3px solid #7c3aed; padding-bottom: 12px; margin-bottom: 20px; }
+  .title { font-size: 22pt; font-weight: 800; color: #7c3aed; margin: 0 0 4px 0; letter-spacing: 0.05em; text-transform: uppercase; }
+  .subtitle { font-size: 10pt; color: #6b7280; margin: 0; text-transform: uppercase; letter-spacing: 0.1em; }
+  h2 { font-size: 12pt; color: #7c3aed; margin: 18px 0 8px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+  table.grid { width: 100%; border-collapse: collapse; margin: 10px 0; }
+  table.grid td { border: 1px solid #d1d5db; padding: 9px 10px; font-size: 10.5pt; vertical-align: top; }
+  table.grid td.label { background: #f9fafb; font-weight: 700; color: #374151; width: 34%; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.04em; }
+  table.grid td.value { color: #111827; }
+  .amount-row td.value { font-size: 15pt; font-weight: 800; color: #111827; }
+  .amount-row td.label { color: #111827; font-size: 9.5pt; }
+  .blank { height: 26px; }
+  .footer { margin-top: 30px; border-top: 1px solid #e5e7eb; padding-top: 10px; font-size: 8pt; color: #6b7280; }
+  .instructions { background: #fef3c7; border: 1px solid #d97706; border-radius: 6px; padding: 12px 14px; margin-bottom: 18px; font-size: 9pt; color: #92400e; }
+  .instructions b { color: #b45309; }
+  .btn { display: inline-block; background: #7c3aed; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 10.5pt; font-weight: 600; cursor: pointer; }
+  .btn:hover { background: #6d28d9; }
+  .no-print { display: block; margin-top: 16px; text-align: center; }
+  @media print { .no-print { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="header">
+    <div class="title">Rent Receipt</div>
+    <div class="subtitle">Payment confirmation for tenancy</div>
+  </div>
+
+  <div class="instructions">
+    <b>How to use:</b> Fill in every field, then print this page or save it as PDF (Ctrl+P &rarr; Save as PDF). Keep one copy for your records and give one to the tenant. No account, no subscription, nothing phones home.
+  </div>
+
+  <table class="grid">
+    <tr class="amount-row">
+      <td class="label">Landlord (receiver)</td>
+      <td class="value"><span id="f-landlord" class="blank"></span></td>
+    </tr>
+    <tr>
+      <td class="label">Tenant (payer)</td>
+      <td class="value"><span id="f-tenant" class="blank"></span></td>
+    </tr>
+    <tr class="amount-row">
+      <td class="label">Amount received</td>
+      <td class="value"><span id="f-amount" class="blank"></span></td>
+    </tr>
+    <tr>
+      <td class="label">Rent period</td>
+      <td class="value"><span id="f-period" class="blank"></span></td>
+    </tr>
+    <tr>
+      <td class="label">Property / unit</td>
+      <td class="value"><span id="f-property" class="blank"></span></td>
+    </tr>
+    <tr>
+      <td class="label">Payment method</td>
+      <td class="value"><span id="f-method" class="blank"></span></td>
+    </tr>
+    <tr>
+      <td class="label">Note / reference</td>
+      <td class="value"><span id="f-note" class="blank"></span></td>
+    </tr>
+    <tr>
+      <td class="label">Date issued</td>
+      <td class="value"><span id="f-date" class="blank"></span></td>
+    </tr>
+  </table>
+
+  <div class="footer">
+    Generated with the Fillable Rent Receipt template &mdash; one-time purchase, self-hosted, unlimited receipts.<br>
+    Nothing phones home. No account required.
+  </div>
+</div>
+
+<div class="no-print">
+  <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+  <button class="btn" style="background:#6b7280;margin-left:8px" onclick="location.reload()">Clear all</button>
+</div>
+
+<script>
+const fields = {
+  'f-landlord': 'landlord', 'f-tenant': 'tenant', 'f-amount': 'amount',
+  'f-period': 'period', 'f-property': 'property', 'f-method': 'method',
+  'f-note': 'note', 'f-date': 'date'
+};
+// preset today's date
+document.getElementById('f-date').textContent = new Date().toLocaleDateString('en-GB');
+// make each span contenteditable and highlight on click
+for (const [id, key] of Object.entries(fields)) {
+  const el = document.getElementById(id);
+  el.contentEditable = 'true';
+  el.addEventListener('focus', () => el.style.background = '#dbeafe');
+  el.addEventListener('blur', () => el.style.background = '');
+  el.addEventListener('input', () => {
+    // keep amounts tidy
+    if (key === 'amount' && !el.textContent.startsWith('\u20ac') && !el.textContent.startsWith('$')) {
+      // leave as typed
+    }
+  });
+}
+</script>
+
+</body>
+</html>
