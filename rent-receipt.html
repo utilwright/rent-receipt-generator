@@ -1,114 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fillable Rent Receipt — for landlords and tenants</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Rent Receipt Generator</title>
 <style>
-  * { box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; color: #1f2937; margin: 0; padding: 0; background: #f3f4f6; }
-  .page { width: 210mm; min-height: 297mm; padding: 20mm; margin: 0 auto; background: white; box-shadow: 0 0 10mm rgba(0,0,0,0.08); }
-  @media print { body { background: white; } .page { box-shadow: none; margin: 0; } }
-  .header { border-bottom: 3px solid #7c3aed; padding-bottom: 12px; margin-bottom: 20px; }
-  .title { font-size: 22pt; font-weight: 800; color: #7c3aed; margin: 0 0 4px 0; letter-spacing: 0.05em; text-transform: uppercase; }
-  .subtitle { font-size: 10pt; color: #6b7280; margin: 0; text-transform: uppercase; letter-spacing: 0.1em; }
-  h2 { font-size: 12pt; color: #7c3aed; margin: 18px 0 8px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-  table.grid { width: 100%; border-collapse: collapse; margin: 10px 0; }
-  table.grid td { border: 1px solid #d1d5db; padding: 9px 10px; font-size: 10.5pt; vertical-align: top; }
-  table.grid td.label { background: #f9fafb; font-weight: 700; color: #374151; width: 34%; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.04em; }
-  table.grid td.value { color: #111827; }
-  .amount-row td.value { font-size: 15pt; font-weight: 800; color: #111827; }
-  .amount-row td.label { color: #111827; font-size: 9.5pt; }
-  .blank { height: 26px; }
-  .footer { margin-top: 30px; border-top: 1px solid #e5e7eb; padding-top: 10px; font-size: 8pt; color: #6b7280; }
-  .instructions { background: #fef3c7; border: 1px solid #d97706; border-radius: 6px; padding: 12px 14px; margin-bottom: 18px; font-size: 9pt; color: #92400e; }
-  .instructions b { color: #b45309; }
-  .btn { display: inline-block; background: #7c3aed; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 10.5pt; font-weight: 600; cursor: pointer; }
-  .btn:hover { background: #6d28d9; }
-  .no-print { display: block; margin-top: 16px; text-align: center; }
-  @media print { .no-print { display: none; } }
-</style>
-</head>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f3f4f6;color:#111;line-height:1.6;padding:20px}
+  .card{background:#fff;max-width:700px;margin:0 auto;padding:30px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+  h1{font-size:1.4rem;margin-top:0;color:#0b3d91;margin-bottom:6px}
+  p.sub{color:#6b7280;font-size:0.88rem;margin-bottom:20px}
+  .tabs{display:flex;gap:8px;margin-bottom:16px;overflow:auto}
+  .tab{background:#fff;border:1px solid #d1d5db;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:0.85rem;color:#374151}
+  .tab.active{background:#0b3d91;color:#fff;border-color:#0b3d91}
+  .tab:hover{border-color:#0b3d91}
+  .panel{display:none}
+  .panel.active{display:block}
+  .form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form.full{grid-template-columns:1fr}
+  .field{display:flex;flex-direction:column;gap:5px}
+  label{font-size:0.82rem;font-weight:600;color:#374151}
+  input,textarea,select{padding:8px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:0.9rem;background:#fff}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#0b3d91}
+  .btnrow{margin-top:14px;display:flex;gap:8px}
+  .btn{padding:10px 18px;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.9rem}
+  .btn.gen{background:#0b3d91;color:#fff}
+  .btn.gen:hover{background:#093277}
+  .btn.secondary{background:#6b7280;color:#fff}
+  .btn.secondary:hover{background:#4b5563}
+  .btn.small{padding:6px 10px;font-size:0.8rem}
+  .preview{border:1px solid #e5e7eb;border-radius:8px;padding:18px;background:#fafafa;margin-top:16px;display:none}
+  .preview h2{margin:0 0 10px 0;font-size:1.05rem;color:#0b3d91}
+  .receipt{max-width:380px;font-family:'Courier New',monospace;font-size:0.8rem;line-height:1.5;border:1px solid #d1d5db;padding:14px;background:#fff;margin:0 auto}
+  .receipt .center{text-align:center}
+  .receipt .title{font-weight:700;font-size:1.1rem;margin-bottom:4px}
+  .receipt .row{display:flex;justify-content:space-between;border-bottom:1px solid #e5e7eb;padding:3px 0}
+  .receipt .total{font-weight:700;border-top:2px solid #111;padding-top:6px;margin-top:6px}
+  .history{margin-top:16px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;display:none}
+  .history.active{display:block}
+  .history h3{margin:0;padding:10px 14px;background:#f3f4f6;font-size:0.9rem;color:#374151;border-bottom:1px solid #e5e7eb}
+  .hist-list{padding:8px}
+  .hist-item{padding:8px 12px;border-bottom:1px solid #f3f4f6;font-size:0.85rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+  .hist-item:hover{background:#f9fafb}
+  .hist-item:last-child{border-bottom:none}
+  .foot{margin-top:22px;font-size:0.78rem;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:10px}
+  @media print{body{background:#fff;padding:0}.card{box-shadow:none;border:none;padding:0}.no-print{display:none}}
+  .empty{color:#9ca3af;font-size:0.85rem;padding:10px}
+</style></head>
 <body>
-
-<div class="page">
-  <div class="header">
-    <div class="title">Rent Receipt</div>
-    <div class="subtitle">Payment confirmation for tenancy</div>
+<div class="card">
+  <h1>Rent Receipt Generator</h1>
+  <p class="sub">Create a rent receipt for your tenant. Your landlord and property details are saved in your browser so you don't retype them each month. Print or save as PDF.</p>
+  <div class="tabs">
+    <button class="tab active" onclick="show('new')">New receipt</button>
+    <button class="tab" onclick="show('history')">Past receipts</button>
   </div>
-
-  <div class="instructions">
-    <b>How to use:</b> Fill in every field, then print this page or save it as PDF (Ctrl+P &rarr; Save as PDF). Keep one copy for your records and give one to the tenant. No account, no subscription, nothing phones home.
+  <div id="new" class="panel active">
+    <form id="form" onsubmit="event.preventDefault();generate()">
+      <div class="form">
+        <div class="field"><label>Landlord name</label><input id="landlord" placeholder="Your name or company"></div>
+        <div class="field"><label>Tenant name</label><input id="tenant" placeholder="Tenant's full name"></div>
+        <div class="field full"><label>Property address</label><input id="address" placeholder="Full address of the rented property"></div>
+        <div class="field"><label>Amount paid</label><input id="amount" type="number" step="0.01" placeholder="0.00"></div>
+        <div class="field"><label>Payment method</label><select id="method"><option>Cash</option><option>Bank transfer</option><option>Cheque</option><option>Standing order</option></select></div>
+        <div class="field"><label>Period covered</label><input id="period" placeholder="e.g. 1–31 March 2026"></div>
+        <div class="field full"><label>Notes</label><textarea id="notes" rows="2" placeholder="Optional notes (deposit, arrears, etc.)"></textarea></div>
+      </div>
+      <div class="btnrow">
+        <button class="btn gen" type="submit">Generate receipt</button>
+        <button class="btn secondary small" type="button" onclick="saveDetails()">Save details for next time</button>
+      </div>
+    </form>
   </div>
-
-  <table class="grid">
-    <tr class="amount-row">
-      <td class="label">Landlord (receiver)</td>
-      <td class="value"><span id="f-landlord" class="blank"></span></td>
-    </tr>
-    <tr>
-      <td class="label">Tenant (payer)</td>
-      <td class="value"><span id="f-tenant" class="blank"></span></td>
-    </tr>
-    <tr class="amount-row">
-      <td class="label">Amount received</td>
-      <td class="value"><span id="f-amount" class="blank"></span></td>
-    </tr>
-    <tr>
-      <td class="label">Rent period</td>
-      <td class="value"><span id="f-period" class="blank"></span></td>
-    </tr>
-    <tr>
-      <td class="label">Property / unit</td>
-      <td class="value"><span id="f-property" class="blank"></span></td>
-    </tr>
-    <tr>
-      <td class="label">Payment method</td>
-      <td class="value"><span id="f-method" class="blank"></span></td>
-    </tr>
-    <tr>
-      <td class="label">Note / reference</td>
-      <td class="value"><span id="f-note" class="blank"></span></td>
-    </tr>
-    <tr>
-      <td class="label">Date issued</td>
-      <td class="value"><span id="f-date" class="blank"></span></td>
-    </tr>
-  </table>
-
-  <div class="footer">
-    Generated with the Fillable Rent Receipt template &mdash; one-time purchase, self-hosted, unlimited receipts.<br>
-    Nothing phones home. No account required.
+  <div id="history" class="panel history">
+    <h3>Past receipts</h3>
+    <div class="hist-list" id="histlist"><div class="empty">No saved receipts yet.</div></div>
   </div>
+  <div class="preview" id="preview">
+    <h2>Your receipt</h2>
+    <div class="receipt" id="receipt"></div>
+    <div class="btnrow" style="margin-top:12px;justify-content:center">
+      <button class="btn secondary" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>
+  <div class="foot">Rent Receipt Toolkit (agent0). Made and run by an AI agent. Details saved in your browser only — nothing leaves your computer.</div>
 </div>
-
-<div class="no-print">
-  <button class="btn" onclick="window.print()">Print / Save as PDF</button>
-  <button class="btn" style="background:#6b7280;margin-left:8px" onclick="location.reload()">Clear all</button>
-</div>
-
 <script>
-const fields = {
-  'f-landlord': 'landlord', 'f-tenant': 'tenant', 'f-amount': 'amount',
-  'f-period': 'period', 'f-property': 'property', 'f-method': 'method',
-  'f-note': 'note', 'f-date': 'date'
-};
-// preset today's date
-document.getElementById('f-date').textContent = new Date().toLocaleDateString('en-GB');
-// make each span contenteditable and highlight on click
-for (const [id, key] of Object.entries(fields)) {
-  const el = document.getElementById(id);
-  el.contentEditable = 'true';
-  el.addEventListener('focus', () => el.style.background = '#dbeafe');
-  el.addEventListener('blur', () => el.style.background = '');
-  el.addEventListener('input', () => {
-    // keep amounts tidy
-    if (key === 'amount' && !el.textContent.startsWith('\u20ac') && !el.textContent.startsWith('$')) {
-      // leave as typed
-    }
-  });
+const STORAGE_KEY='rentreceipt_v1';
+function esc(t){return String(t===""?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function fmt(n){return parseFloat(n||0).toFixed(2)}
+function show(p){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(p).classList.add('active');event.target.classList.add('active')}
+function loadDetails(){try{const d=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');['landlord','address'].forEach(k=>{const el=document.getElementById(k);if(el&&d[k])el.value=d[k]});}catch(e){}}
+function saveDetails(){const d={landlord:document.getElementById('landlord').value,address:document.getElementById('address').value};localStorage.setItem(STORAGE_KEY,JSON.stringify(d));alert('Details saved for next time.');}
+function generate(){
+  const d=document.getElementById;
+  const receipt=[
+    "<div class='center'><div class='title'>RENT RECEIPT</div><div style='font-size:0.75rem;color:#666'>Received with thanks</div></div>",
+    "<div class='row'><span>Landlord:</span><span>"+esc(d('landlord').value)+"</span></div>",
+    "<div class='row'><span>Tenant:</span><span>"+esc(d('tenant').value)+"</span></div>",
+    "<div class='row'><span>Property:</span><span>"+esc(d('address').value)+"</span></div>",
+    "<div class='row'><span>Amount:</span><span>\u20ac"+fmt(d('amount').value)+"</span></div>",
+    "<div class='row'><span>Method:</span><span>"+esc(d('method').value)+"</span></div>",
+    "<div class='row'><span>Period:</span><span>"+esc(d('period').value)+"</span></div>",
+    d('notes').value?"<div class='row'><span>Notes:</span><span>"+esc(d('notes').value)+"</span></div>":"",
+    "<div class='row'><span>Date:</span><span>"+new Date().toLocaleDateString()+"</span></div>",
+    "<div class='total'><span>Total received:</span><span>\u20ac"+fmt(d('amount').value)+"</span></div>",
+    "<div style='margin-top:10px;font-size:0.7rem;color:#666'>Rent Receipt Toolkit (agent0)</div>"
+  ].join("");
+  d('receipt').innerHTML=receipt;
+  d('preview').style.display='block';
+  d('preview').scrollIntoView({behavior:'smooth'});
+  saveReceipt({landlord:d('landlord').value,tenant:d('tenant').value,address:d('address').value,amount:d('amount').value,period:d('period').value,date:new Date().toISOString()});
 }
+function saveReceipt(r){try{const h=JSON.parse(localStorage.getItem('rentreceipt_hist_v1')||'[]');h.unshift(r);if(h.length>50)h.pop();localStorage.setItem('rentreceipt_hist_v1',JSON.stringify(h));renderHistory();}catch(e){}}
+function renderHistory(){const h=JSON.parse(localStorage.getItem('rentreceipt_hist_v1')||'[]');const el=document.getElementById('histlist');if(!h.length){el.innerHTML='<div class="empty">No saved receipts yet.</div>';return} el.innerHTML=h.map(r=>`<div class="hist-item"><div><div style="font-weight:600">'+esc(r.tenant)+'</div><div style="font-size:0.78rem;color:#6b7280">'+esc(r.address)+' · €'+fmt(r.amount)+' · '+new Date(r.date).toLocaleDateString()+'</div></div><div style="font-size:0.75rem;color:#0b3d91">Load</div></div>`).join('');}
+loadDetails();
+renderHistory();
 </script>
-
-</body>
-</html>
+</body></html>

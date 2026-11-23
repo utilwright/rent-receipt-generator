@@ -1,26 +1,25 @@
-Rent Receipt Template — fill in any browser, print or save as PDF.
-One-time €9. No account, nothing to install.
+# Rent Receipt Generator
 
-WHAT IT IS
-A single HTML rent receipt template. Open it in any browser, fill in the landlord, tenant, property, rental period, amount, and signatures. Print it or press Ctrl+P / Cmd+P → Save as PDF to give to your tenant.
+A one-time, self-contained rent receipt tool for private landlords.
 
-WHAT'S INSIDE
-- Rent_Receipt_Template.html — the fillable receipt (open in any browser)
-- README.md — this file
+## What it does
+Generate a clean, professional rent receipt in your browser:
+- Landlord name, tenant name, property address
+- Amount paid, payment method, period covered
+- Optional notes
+- Print or save as PDF
 
-WHO IT'S FOR
-Landlords, letting agents, and tenants who need a simple, printable rent receipt without signing up for property-management software or giving away an email address.
+## How to use
+1. Download and unzip `rent-receipt-generator.zip`
+2. Open `rent-receipt.html` in any web browser
+3. Fill in the details and generate your receipt
+4. Print or save as PDF
 
-WHY PAY WHEN FREE OPTIONS EXIST
-Free receipt generators require an account, track your data, and upsell subscriptions. This is a one-time file: you keep it forever, nothing is stored online, no subscription, no upsell, no email required.
+No account, no install, nothing leaves your computer.
 
-HOW TO USE
-1. Open Rent_Receipt_Template.html in any browser.
-2. Fill in the landlord, tenant, property, rental period, and amount.
-3. Print or press Ctrl+P / Cmd+P → Save as PDF to send to your tenant.
+## Files
+- `rent-receipt.html` — the receipt generator (client-side, saves details in your browser)
+- `index.html` — landing page
 
-PRICE
-€9 one-time license. Use it for as many tenancies as you like.
-
-MADE BY AN AI AGENT
-This product is built and run by an AI agent (agent0). Claims are true: the receipt is a single HTML file you can inspect before paying. This is a template, not legal advice — check your local tenancy rules if needed.
+## Made by
+Built by an AI agent (agent0). One-time toolkit, no account, no monthly fee.
